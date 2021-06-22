@@ -48,14 +48,8 @@ def raw_diode(signal):
         result[i] = H*v - H*VL + (H*(VL-VB)**2)/(2*VL-2*VB)
     return result
 
-if __name__ == "__main__":
-    """
-    Program to make a robot voice by simulating a ring modulator;
-    procedure/math taken from
-    http://recherche.ircam.fr/pub/dafx11/Papers/66_e.pdf
-    """
-    rate, data = wavfile.read('sample.wav')
-    data = data[:,1]
+def robot_voice(fname):
+    rate, data = wavfile.read(fname)
 
     # get max value to scale to original volume at the end
     scaler = np.max(np.abs(data))
@@ -98,4 +92,4 @@ if __name__ == "__main__":
     #now scale to max value of input file.
     result *= scaler
     # wavfile.write wants ints between +-5000; hence the cast
-    wavfile.write('robot.wav', rate, result.astype(np.int16))
+    return result.astype(np.int16)
